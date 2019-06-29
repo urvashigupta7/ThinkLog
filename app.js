@@ -5,7 +5,7 @@ var methodoverride=require('method-override')
 var bodyparser=require('body-parser')
 var mongoose =require("mongoose")
 mongoose.set("useFindAndModify", false);
-mongoose.connect('mongodb+srv://urvashi:delhi2018@cluster0-lhmgd.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true})
+mongoose.connect('mongodb://localhost/blogapp',{ useNewUrlParser: true})
 app.use(express.static('public'));
 app.use(methodoverride('_method'));
 app.use(bodyparser.urlencoded({extended:true}));
