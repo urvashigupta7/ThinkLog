@@ -8,3 +8,21 @@ i.icon{
 #delete{
     display:inline;
 }
+.ui.text.container{
+    max-width: 100% !important;
+}
+body{
+    background-color: #f6f2f2;
+}
+.ui .segment{
+    background-color: #f6f2f2;
+}
+#myInput {
+    width: 100%; 
+    font-size: 16px; 
+    padding: 12px 20px 12px 40px; 
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    border-radius: 5px;;
+  }
+  
