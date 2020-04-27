@@ -4,26 +4,20 @@ var sanitizer=require('express-sanitizer');
 var methodoverride=require('method-override');
 var bodyparser=require('body-parser');
 var mongoose =require("mongoose");
+var Blog=require('./model/blog');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 mongoose.set("useFindAndModify", false);
-mongoose.connect('mongodb+srv://urvashi:delhi2018@cluster0-lhmgd.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true});
+mongoose.connect(process.env.URL,{ useNewUrlParser: true});
 
 
 app.use(express.static('public'));
 app.use(methodoverride('_method'));
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(sanitizer());
-var blogschema=new mongoose.Schema({
-    title:String,
-    image:String,
-    body:String,
-    created:{type:Date,default:Date.now}
-});
-var Blog=mongoose.model('Blog',blogschema);
-// Blog.create({
-//     title:'testblog',
-//     image:'https://images.unsplash.com/photo-1494947665470-20322015e3a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-//     body:'HELLO THIS IS A BLOG POST'
-// })
+
+
 app.get('/',function(req,res)
 {
    
@@ -117,6 +111,6 @@ app.delete('/blogs/:id',function(req,res)
         }
     });
 });
-app.listen(process.env.PORT,process.env.IP,function(){
+app.listen(process.env.PORT||3000,process.env.IP,function(){
     console.log('server has started');
 });
