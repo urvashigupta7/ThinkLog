@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    font-family: 'Roboto', sans-serif !important;
+    line-height: 1.6 ;
+  }
+
 i.icon{
     font-size: 2em;
     
@@ -33,7 +40,11 @@ body{
       margin-top: 2%;
   }
   p{
-      font-size: 1.4rem;
+      font-size: 1.2rem;
+  }
+  .description{
+    text-align: justify;
+
   }
   .mycontainer{
      margin: 0 auto;
@@ -42,17 +53,14 @@ body{
      margin-top: 7.0em;
      padding-bottom: 2em;
   }
-  .myimage img{
-      height: 250px;
-      width: 100%;
-  }
+  
   .ui.cards .card{
       background-color:#f6f2f2 ;
   }
   
   .ui.cards > .card{
       margin: 1.5rem auto;
-      width: 80%;
+      width: 75%;
 
   }
   .ui.link.cards{
@@ -62,4 +70,11 @@ body{
   #msg{
       padding-left: 2em;
       padding-top: 2em;
+  }
+  img{
+      width: 50%;
+  }
+  .ui.cards > .card > .image > img{
+    width: 100%;
+    height: 250px;
   }

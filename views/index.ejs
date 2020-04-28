@@ -6,13 +6,13 @@
     <div class="ui link cards">
         <%blogs.forEach(function(blog){%>
         <div class="card blog" style="cursor: initial;">
-          <div class="image myimage">
+          <div class="image">
             <img src="<%=blog.image%>">
         </div>
           <div class="content">
             <a class='header' href='/blogs/<%=blog._id%>'><div class="title"><%=blog.title%></div></a>
             <div class="description">
-                p><%=blog.body.substring(0,100)%>...</p>
+                <p><%=blog.body.substring(0,100)%>...</p>
             </div>
           </div>
           <div class="extra content">
