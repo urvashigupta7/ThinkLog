@@ -85,7 +85,6 @@ body{
     background-position: center; 
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.8;
     z-index: -1;
   }
   body > .grid {
