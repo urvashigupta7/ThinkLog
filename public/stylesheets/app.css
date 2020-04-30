@@ -95,10 +95,7 @@ body{
   .column {
     max-width: 450px;
   }
-  .ui.large.form{
-      margin-top: 5%;
-  }
- 
+  
   .login{
       background-color: black;
       color: white;
@@ -112,12 +109,7 @@ body{
     width: 100%;
     z-index: 1;
     text-align: center;}
-  @media screen and (max-width: 992px) {
-
-    .main{
-        margin-top: 60%;
-    }
-  }
+ 
 
   @media screen and (max-width:1024px) {
 
@@ -125,5 +117,10 @@ body{
         margin-top: 50%;
     }
   }
+  @media screen and (max-width: 992px) {
 
+    .main{
+        margin-top: 65%;
+    }
+  }
   
