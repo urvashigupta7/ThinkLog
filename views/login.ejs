@@ -1,6 +1,32 @@
-<h1>LOGIN PAGE</h1>
-<form method='POST' action='/login'>
-    <input type='text' placeholder='username' name='username'>
-      <input type='password' placeholder='password' name='password'>
-      <button>Submit</button>
-    </form>
+<%include partials/header%>
+<div class="mybg">
+    <div class="ui middle aligned center aligned grid">
+      <div class="column">
+        
+        <form action="/login" method="POST" class="ui large form">
+          <h2 class="ui image header">
+            <div class="content">
+              Log-in to your account
+            </div>
+          </h2>
+          <div class="ui stacked secondary  segment">
+            <div class="field">
+              <div class="ui left input">
+                <input type="text" name="username" placeholder="Username">
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left input">
+                <input type="password" name="password" placeholder="Password">
+              </div>
+            </div>
+            <button type="submit" class="login">Login</button>
+          </div>    
+        </form>
+       <div class="ui message">
+          New to us? <a href="/register">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<%include partials/footer%>

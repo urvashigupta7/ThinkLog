@@ -1,7 +1,39 @@
+<%include partials/header%>
+<div class="mybg">
 <h1>this is a signup form</h1>
-<form method='POST' action='/register'>
+<!-- <form method='POST' action='/register'>
     <input type='text' placeholder='username' name='username'>
       <input type='password' placeholder='password' name='password'>
       <button>Submit</button>
     </form>
-    <li><a href='/login'>LOGIN</a></li>
+    <li><a href='/login'>LOGIN</a></li> -->
+    <div class="ui middle aligned center aligned grid">
+      <div class="column">
+        
+        <form action="/register" method="POST" class="ui large form">
+          <h2 class="ui image header">
+            <div class="content">
+              Register Account
+            </div>
+          </h2>
+          <div class="ui stacked secondary  segment">
+            <div class="field">
+              <div class="ui left input">
+                <input type="text" name="username" placeholder="Username">
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left input">
+                <input type="password" name="password" placeholder="Password">
+              </div>
+            </div>
+            <button type="submit" class="login">Register</button>
+          </div>    
+        </form>
+       <div class="ui message">
+          Already have an account? <a href="/login">Login</a>
+        </div>
+      </div>
+    </div>
+</div>
+<%include partials/footer%>

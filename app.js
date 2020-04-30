@@ -26,15 +26,17 @@ passport.use(new localstrategy(user.authenticate()));
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
-app.use(function(req,res,next)
-{   res.locals.currentUser=req.user;
-    next();
-});
+
 app.use(express.static('public'));
 app.use(methodoverride('_method'));
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(sanitizer());
+app.use(function(req,res,next)
+{   res.locals.currentUser=req.user;
+    next();
+});
 app.use(authroutes);
+
 app.use(blogroutes);
 
 app.listen(process.env.PORT||3000,process.env.IP,function(){

@@ -8,11 +8,11 @@ router.get('/',function(req,res)
     res.render('home.ejs');
 })
 
-router.get('/register',function(req, res) {
+router.get('/register',middleware.auth,function(req, res) {
     res.render('register.ejs')
    
 })
-router.post('/register',function(req, res) {
+router.post('/register',middleware.auth,function(req, res) {
     
      user.register(new user({username:req.body.username}),req.body.password,function(err,newuser)
      {
@@ -29,10 +29,10 @@ router.post('/register',function(req, res) {
          }
      })
  })
- router.get('/login',function(req, res) {
+ router.get('/login',middleware.auth,function(req, res) {
      res.render('login.ejs')
  })
- router.post('/login',passport.authenticate('local',
+ router.post('/login',middleware.auth,passport.authenticate('local',
  {
      successRedirect:'/blogs',
      failureRedirect:'/login'

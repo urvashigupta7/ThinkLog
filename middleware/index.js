@@ -6,6 +6,15 @@ middleware.isloggedin = function isloggedin(req, res, next) {
     }
     res.redirect('/login');
 }
+middleware.auth=function auth(req,res,next){
+    if(req.isAuthenticated()){
+      res.redirect('/blogs');
+    }
+    else{
+        return next();
+    }
+
+}
 middleware.checkownership = function checkownership(req, res, next) {
     if (req.isAuthenticated()) {
         blog.findById(req.params.id, function (err, foundblog) {

@@ -3,6 +3,7 @@
 body {
     font-family: 'Roboto', sans-serif !important;
     line-height: 1.6 ;
+   
   }
 
 i.icon{
@@ -78,3 +79,51 @@ body{
     width: 100%;
     height: 250px;
   }
+  .mybg{
+    height: 100%;
+    background:url('../background.jpg');
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.8;
+    z-index: -1;
+  }
+  body > .grid {
+    height: 100%;
+  }
+  
+  .column {
+    max-width: 450px;
+  }
+  .ui.large.form{
+      margin-top: 5%;
+  }
+  .ui.image.header{
+      margin-top: 50%;
+      font-weight: 900;
+  }
+  .login{
+      background-color: black;
+      color: white;
+      width: 100%;
+      border-radius: 50px;
+      padding: 5px;
+  }
+  .main{
+    position: absolute;
+    margin-top: 15%;
+    width: 100%;
+    z-index: 1;
+    text-align: center;}
+  @media screen and (max-width: 1024px) {
+    .ui.image.header{
+        margin-top: 570px;
+
+    }
+    .main{
+        margin-top: 50%;
+    }
+  }
+
+ 
+  
