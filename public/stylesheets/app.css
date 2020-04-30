@@ -81,7 +81,7 @@ body{
   }
   .mybg{
     height: 100%;
-    background:url('../background.jpg');
+    background:url('https://nitrocdn.com/ZrVyLGnBsIEmEUsrDprCGKwQktkIWAvd/assets/static/optimized/wp-content/uploads/9d1dad491745cd82a7dc182c60f15725.blog-for-business.jpg');
     background-position: center; 
     background-repeat: no-repeat;
     background-size: cover;
@@ -98,10 +98,7 @@ body{
   .ui.large.form{
       margin-top: 5%;
   }
-  .ui.image.header{
-      margin-top: 50%;
-      font-weight: 900;
-  }
+ 
   .login{
       background-color: black;
       color: white;
@@ -115,15 +112,18 @@ body{
     width: 100%;
     z-index: 1;
     text-align: center;}
-  @media screen and (max-width: 1024px) {
-    .ui.image.header{
-        margin-top: 570px;
+  @media screen and (max-width: 992px) {
 
+    .main{
+        margin-top: 60%;
     }
+  }
+
+  @media screen and (max-width:1024px) {
+
     .main{
         margin-top: 50%;
     }
   }
 
- 
   
