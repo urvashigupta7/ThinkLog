@@ -8,13 +8,14 @@
                 <div class='content'>
                     <br>
                     <br> 
-                     <div class='description'>  <p><%=blog.body%></p></div>
-                      
+                     <div class='description'>  <p><%=blog.body%></p></div> 
                     </div>
+                    <% if(currentUser&&blog.author.id.equals(currentUser._id)){%>
                     <a href='/blogs/<%=blog._id%>/edit' class='ui blue basic button'>EDIT</a>
                     <form  id='delete' action='/blogs/<%=blog._id%>?_method=DELETE' method='POST'>
                         <button class='ui blue basic button'>DELETE</button>
                     </form> 
+                <%}%>
                     <br>
                     <div class='meta showmeta '>
                         <span><%=blog.created.toString()%></span>

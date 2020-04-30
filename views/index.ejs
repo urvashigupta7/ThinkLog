@@ -11,6 +11,9 @@
         </div>
           <div class="content">
             <a class='header' href='/blogs/<%=blog._id%>'><div class="title"><%=blog.title%></div></a>
+            <div class="meta">
+              <span>Created By:<%=blog.author.username%></span>
+            </div>
             <div class="description">
                 <p><%=blog.body.substring(0,100)%>...</p>
             </div>
