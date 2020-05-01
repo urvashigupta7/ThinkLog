@@ -102,7 +102,7 @@ body{
       border-radius: 50px;
       padding: 5px;
   }
-  .main{
+  .mymain{
     position: absolute;
     margin-top: 15%;
     width: 100%;
@@ -112,14 +112,17 @@ body{
 
   @media screen and (max-width:1024px) {
 
-    .main{
+    .mymain{
         margin-top: 50%;
     }
   }
   @media screen and (max-width: 992px) {
 
-    .main{
+    .mymain{
         margin-top: 65%;
     }
+  }
+  #type{
+    font-size: 35px;
   }
   
