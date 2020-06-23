@@ -1,36 +1,65 @@
 <%include partials/header%>
 <div class="mycontainer">
-    <div class="ui huge header">
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Blogs..">
-    </div>
-    <div class="ui link cards">
-        <%blogs.forEach(function(blog){%>
-        <div class="card blog" style="cursor: initial;">
-          <div class="image">
-            <img src="<%=blog.image%>">
+  <div class="ui huge header">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Blogs..">
+  </div>
+  <div class="ui link cards">
+    <%blogs.forEach(function(blog){%>
+    <div class="card blog" style="cursor: initial;">
+      <div class="image">
+        <img src="<%=blog.image%>">
+      </div>
+      <div class="content">
+        <a class='header' href='/blogs/<%=blog._id%>'>
+          <div class="title"><%=blog.title%></div>
+        </a>
+        <div class="meta">
+          <span>Created By:<%=blog.author.username%></span>
         </div>
-          <div class="content">
-            <a class='header' href='/blogs/<%=blog._id%>'><div class="title"><%=blog.title%></div></a>
-            <div class="meta">
-              <span>Created By:<%=blog.author.username%></span>
-            </div>
-            <div class="description">
-                <p><%=blog.body.substring(0,100)%>...</p>
-            </div>
-          </div>
-          <div class="extra content">
-            <a class='ui floated basic blue button' href='/blogs/<%=blog._id%>'>Read more</a>
-            <br>
-            <br>
-            <span><%=blog.created.toString()%></span>
+        <div class="description">
+          <p><%=blog.body.substring(0,100)%>...</p>
+        </div>
+      </div>
+      <div class="extra content">
+        <a class='ui floated basic blue button' href='/blogs/<%=blog._id%>'>Read more</a>
+        <br>
+        <br>
+        <span><%=blog.created.toString()%></span>
 
-          </div>
-        </div>
-        <%})%>
-      </div> 
-      <div>
-        <h3 id='msg'></h3>
-        </div>  
+      </div>
+    </div>
+    <%})%>
+  </div>
+  <div>
+    <h3 id='msg'></h3>
+  </div>
+  <div class='pagination'>
+    <%if(current>1){%>
+    <span class='card-page'>
+      <a href='/blogs?page=<%=current-1%>'><span style='margin:2em;' >Back</span></a>
+    </span>
+    <% } %>
+    <% if(showNext){ %>
+      <span class='card-page'>
+        <a href='/blogs?page=<%=current+1%>'><span style='margin:2em;'>Next</span></a>
+    </span>
+    <% } %>
+  </div>
+  <div class='options'>
+    <span>
+    <% if((total)>1){ %>
+      <select  class='card-page' name='page' onchange="window.location.href=this.value;">
+        <% for(var i=1;i<=total;i++){ %>
+          <%if(current==i) {%>
+          <option value='/blogs?page=<%=i%>' selected='selected' >Page <%=i%></option>
+          <% }else {%>
+            <option value='/blogs?page=<%=i%>'>Page <%=i%></option>
+          <% } %>
+        <%}%>
+      </select>
+    <%} %>
+  </span>
+  </div>
 </div>
 
 <%include partials/footer%>

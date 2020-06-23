@@ -2,19 +2,20 @@ var express=require("express");
 var router=express.Router();
 var Blog=require("../model/blog");
 var middleware=require("../middleware");
-router.get('/blogs',middleware.isloggedin,function(req,res)
+router.get('/blogs',middleware.isloggedin, async function(req,res)
 {
-     console.log('someone checked your website');
-    Blog.find({},function(err,blogs)
-    {
-        if(err)
-        {
-            console.log(err);
-        }
-        else
-        res.render('index.ejs',{blogs:blogs});
-    });
-    
+    let page=req.query.page || 1;
+    page=Number(page);
+    let limit=9;
+    let skip=(page-1)*limit;
+    try{
+        const blogs=await Blog.find({}).skip(skip).limit(limit);
+        const count=await Blog.count({});
+        const showNext=count>limit*page?true:false
+        res.render('index.ejs',{blogs:blogs,showNext:showNext,current:page,total:Math.ceil(count/limit)});
+    }catch(e){
+      console.log(err);
+    }
 });
 router.get('/blogs/new',middleware.isloggedin,function(req,res)
 {   
