@@ -3,7 +3,7 @@ var router=express.Router();
 var passport=require("passport")
 var middleware=require("../middleware");
 var user=require('../model/user');
-router.get('/',function(req,res)
+router.get('/',middleware.auth,function(req,res)
 { 
     res.render('home.ejs');
 })
