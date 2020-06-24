@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
     font-family: 'Roboto', sans-serif !important;
     line-height: 1.6 ;
@@ -26,9 +32,9 @@ body{
     background-color: #f6f2f2;
 }
 #myInput {
-    width: 100%; 
+    width: 84%; 
     font-size: 16px; 
-    padding: 12px 20px 12px 40px; 
+    padding: 1em 1em; 
     border: 1px solid #ddd;
     margin-bottom: 12px;
     border-radius: 5px;
@@ -127,15 +133,24 @@ body{
   }
  
   .card-page{
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 700;
     height: 50px;
-    border:2px solid #d4d4d5;
     border-radius:10px ;
     margin: 0 auto;
-    padding: 5px;
-    background-color: #f6f2f2;
+    padding: 0.8em 1em;
+    background-color:black;
+    transition-duration: 0.2s;
   }
+
+  .card-page a{
+    color: whitesmoke; 
+  }
+
+ .card-page:hover{
+  background-color: #000000bd
+ }
+ 
 .pagination{
   width: 100%;
   display: flex;
@@ -145,5 +160,23 @@ body{
   margin: 2em 2em;
   display: flex;
   justify-content: flex-end;
-  color: #4183c4;
+  color:whitesmoke;
+  padding: 0.8em 1em;
+  font-size: 16px;
+}
+.search-btn{
+  width: 15%;
+  font-size: 16px; 
+  padding: 0.45em 1em; 
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  border-radius: 5px;
+  background-color: black;
+  color: whitesmoke;
+  transition-duration: 0.2s;
+}
+
+.search-btn:hover{
+  background-color: #000000bd
+
 }
