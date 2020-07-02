@@ -1,32 +1,107 @@
 <%include partials/header%>
 <div class='ui main text container segment show'>
     <div class='ui huge header'><%=blog.title%></div>
-    <hr></hr>
+    <hr>
+    </hr>
     <div class='ui top attached '>
         <div class='item'>
-                <img  class= 'ui centered rounded image' src="<%=blog.image%>">
-                <div class='content'>
-                    <br>
-                    <br> 
-                     <div class='description'>  <p><%=blog.body%></p></div> 
-                    </div>
-                    <% if(currentUser&&blog.author.id.equals(currentUser._id)){%>
-                    <a href='/blogs/<%=blog._id%>/edit' class='ui blue basic button'>EDIT</a>
-                    <form  id='delete' action='/blogs/<%=blog._id%>?_method=DELETE' method='POST'>
-                        <button class='ui blue basic button'>DELETE</button>
-                    </form> 
-                <%}%>
+            <div class="my-img">
+                <img class='ui centered rounded image' src="<%=blog.image%>">
+            </div>
+            <div class='content'>
+                <br>
+                <br>
+                <div class='description'>
+                    <p><%=blog.body%></p>
+                </div>
+            </div>
+            <% if(currentUser&&blog.author.id.equals(currentUser._id)){%>
+            <div class="hidden-btn">
+                <a href='/blogs/<%=blog._id%>/edit' class='ui blue basic button'>EDIT</a>
+                <form id='delete' action='/blogs/<%=blog._id%>?_method=DELETE' method='POST'>
+                    <button class='ui blue basic button'>DELETE</button>
+                </form>
+            </div>
+            <%}%>
                     <br>
                     <div class='meta showmeta '>
-                        <span>Created By: <%=blog.author.username%></span>
-                        <br>
-                        <span><%=blog.created.toString()%></span>
-                    </div>              
-                              
+                        <span><strong>Created By: <%=blog.author.username%> </strong></span>
+            <br>
+            <span><%=moment(blog.created).fromNow()%></span>
+        </div>
+
+    </div>
+    <div class="commentBox">
+        <div class="comment-wrapper">
+            <div class="comments-list" id="comments-list">
+                <% blog.comments.forEach(function(comment){%>
+                <div class="comment-info">
+                    <div class="name"><%=comment.author.username%></div>
+                    <div class="text"><%=comment.text %></div>    
+                        <span class='meta showmeta '><%=moment(comment.createdAt).fromNow()%></span>
+                
+                </div>
+                <% }) %>
+                <script id="comment-template" type="text/x-template">
+                        <div class="comment-info">
+                              <div class="name">{{name}}</div>
+                               <div class="text">{{comment}}</div>
+                                <span class='meta showmeta'>{{created}}</span>
+                        </div>
+                 </script>
+            </div>
         </div>
     </div>
-   
-    
-  
-    </div>
-    <%include partials/footer%>
+    <div>
+    <section>
+        Add your comments...
+        <form id="addComment">
+            <textarea id="comment-box" style="width: 100%;" name="text" row="10" col="500"></textarea>
+            <button type="submit" class='ui blue basic button'>Add Comment</button>
+        </form>
+    </section>
+</div>
+</div>
+</div>
+<div id="mydiv" data-test=<%= blog._id %>></div>
+<div id="user" data-user=<%= currentUser.username%>></div>
+
+<script>
+    var id = document.getElementById('mydiv').dataset.test;
+    var user = document.getElementById('user').dataset.user;
+    var commentform = document.getElementById("addComment");
+    commentform.addEventListener("submit", onNewComment);
+
+    function onNewComment(e) {
+        e.preventDefault();
+        var newComment = {
+            "text": document.getElementById('comment-box').value,
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", `/blogs/${id}/comment`, true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState != 4 || xhr.status != 200) return;
+            commentform.reset();
+        };
+        xhr.send(JSON.stringify(newComment))
+    }
+    var pusher = new Pusher('0336f0455b17415fde73', {
+        cluster: 'ap2',
+        encrypted: true
+    })
+    var channel = pusher.subscribe(`comment-${id}`);
+    channel.bind('new-comment', function (data) {
+        var commentsList = document.getElementById('comments-list');
+        var commentTemplate = document.getElementById('comment-template');
+        var newCommentHtml = commentTemplate.innerHTML.replace('{{name}}', data.author.username);
+        newCommentHtml = newCommentHtml.replace('{{comment}}', data.text);
+        newCommentHtml=newCommentHtml.replace('{{created}}','a few seconds ago');
+        var newCommentNode = document.createElement('div');
+        newCommentNode.classList.add('comment');
+        newCommentNode.innerHTML = newCommentHtml;
+        commentsList.appendChild(newCommentNode);
+    })
+</script>
+<%include partials/footer%>

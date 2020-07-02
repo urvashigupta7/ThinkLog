@@ -32,7 +32,7 @@
       <a class='ui floated basic blue button' href='/blogs/<%=blog._id%>'>Read more</a>
       <br>
       <br>
-      <span><%=blog.created.toString()%></span>
+      <span><%=moment(blog.created).fromNow()%></span>
 
     </div>
   </div>

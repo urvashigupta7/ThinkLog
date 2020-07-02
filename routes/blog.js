@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Blog = require("../model/blog");
 var middleware = require("../middleware");
+
 router.get('/blogs', middleware.isloggedin, async function (req, res) {
     let page = req.query.page || 1;
     page = Number(page);
@@ -11,7 +12,7 @@ router.get('/blogs', middleware.isloggedin, async function (req, res) {
         const filter = req.query.search || '';
         const search = filter === '' ? false : true;
         const re = new RegExp(filter);
-        const blogs = await Blog.find({ title: { $regex: re, $options: 'i' } }).skip(skip).limit(limit);
+        const blogs = await Blog.find({ title: { $regex: re, $options: 'i' } }).skip(skip).limit(limit).sort({created:-1}).exec();
         const count = await Blog.countDocuments({ title: { $regex: re, $options: 'i' } });
         const showNext = count > limit * page ? true : false;
         res.render('index.ejs', { blogs: blogs, showNext: showNext, current: page, total: Math.ceil(count / limit), filter: filter, search });
@@ -37,15 +38,14 @@ router.post('/blogs', middleware.isloggedin, function (req, res) {
         }
     });
 });
-router.get('/blogs/:id', middleware.isloggedin, function (req, res) {
-    Blog.findById(req.params.id, function (err, foundblog) {
-        if (err) {
-            res.redirect('/blogs');
-        }
-        else {
-            res.render('show.ejs', { blog: foundblog });
-        }
-    });
+router.get('/blogs/:id', middleware.isloggedin, async (req, res)=> {
+  try{
+    const blog=await Blog.findById(req.params.id).populate({path:'comments', options: { sort: { 'createdAt': 1 } }}).exec();
+    console.log(blog);
+    res.render('show.ejs',{blog:blog});
+  }catch(e){
+      console.log(e);
+  }
 });
 router.get('/blogs/:id/edit', middleware.checkownership, function (req, res) {
     Blog.findById(req.params.id, function (err, editpost) {
