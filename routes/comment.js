@@ -28,15 +28,16 @@ router.put('/blogs/:id/comment/:commentId',async(req,res)=>{
   const tobeedited=await comment.findById(req.params.commentId);
   tobeedited.text=req.body.text;
   tobeedited.save();
-  res.redirect('/blogs/:id/');
+  res.redirect(`/blogs/${req.params.id}`);
   }catch(e){
     console.log(e);
   }
 })
 router.delete('/blogs/:id/comment/:commentId',async(req,res)=>{
   try{
-  const tobedeleted=await comment.findOneAndDelete({_id:req.params.commentId,author:{id:req.user._id,username:req.user.username}});
-  res.redirect('/blogs/:id/');
+    console.log(req.params.commentId);
+  const tobedeleted=await comment.findByIdAndRemove(req.params.commentId);
+  res.redirect(`/blogs/${req.params.id}`);
   }catch(e){
     console.log(e);
   }

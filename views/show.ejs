@@ -38,14 +38,27 @@
                 <div class="comment-info">
                     <div class="name"><%=comment.author.username%></div>
                     <div class="text"><%=comment.text %></div>    
+                    <button id="edit" type="button" onclick="editButtonOnClick(this)">Edit</button>
+                    <button id="cancel" style="display:none;" type="button">Cancel</button>
+                    <form style="display: none;" id='update' action='/blogs/<%=blog._id%>/comment/<%=comment._id%>?_method=PUT' method='POST'>
+                        <span><button>Update</button></span>
+                    </form>
+                    <form id='delete' action='/blogs/<%=blog._id%>/comment/<%=comment._id%>?_method=DELETE' method='POST'>
+                        <span><button>Delete</button></span>
+                    </form>
                         <span class='meta showmeta '><%=moment(comment.createdAt).fromNow()%></span>
-                
+                             
                 </div>
                 <% }) %>
                 <script id="comment-template" type="text/x-template">
                         <div class="comment-info">
                               <div class="name">{{name}}</div>
                                <div class="text">{{comment}}</div>
+                               <button id="edit" type="button" onclick="editButtonOnClick()">Edit</button>
+                               <button style="display:none;" id="cancel" type="button">Cancel</button>
+                               <form id='delete' action='{{url}}' method='POST'>
+                                <span><button>Delete</button></span>
+                            </form> 
                                 <span class='meta showmeta'>{{created}}</span>
                         </div>
                  </script>
@@ -66,42 +79,5 @@
 <div id="mydiv" data-test=<%= blog._id %>></div>
 <div id="user" data-user=<%= currentUser.username%>></div>
 
-<script>
-    var id = document.getElementById('mydiv').dataset.test;
-    var user = document.getElementById('user').dataset.user;
-    var commentform = document.getElementById("addComment");
-    commentform.addEventListener("submit", onNewComment);
-
-    function onNewComment(e) {
-        e.preventDefault();
-        var newComment = {
-            "text": document.getElementById('comment-box').value,
-        }
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", `/blogs/${id}/comment`, true);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState != 4 || xhr.status != 200) return;
-            commentform.reset();
-        };
-        xhr.send(JSON.stringify(newComment))
-    }
-    var pusher = new Pusher('0336f0455b17415fde73', {
-        cluster: 'ap2',
-        encrypted: true
-    })
-    var channel = pusher.subscribe(`comment-${id}`);
-    channel.bind('new-comment', function (data) {
-        var commentsList = document.getElementById('comments-list');
-        var commentTemplate = document.getElementById('comment-template');
-        var newCommentHtml = commentTemplate.innerHTML.replace('{{name}}', data.author.username);
-        newCommentHtml = newCommentHtml.replace('{{comment}}', data.text);
-        newCommentHtml=newCommentHtml.replace('{{created}}','a few seconds ago');
-        var newCommentNode = document.createElement('div');
-        newCommentNode.classList.add('comment');
-        newCommentNode.innerHTML = newCommentHtml;
-        commentsList.appendChild(newCommentNode);
-    })
-</script>
+<script src="/script/blog.js"></script>
 <%include partials/footer%>
