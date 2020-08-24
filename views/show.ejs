@@ -11,8 +11,8 @@
             <div class='content'>
                 <br>
                 <br>
-                <div class='description'>
-                    <p><%=blog.body%></p>
+                <div class='description white-space-pre-wrap'>
+                    <p><%= blog.body%></p>
                 </div>
             </div>
             <% if(currentUser&&blog.author.id.equals(currentUser._id)){%>
@@ -29,7 +29,6 @@
             <br>
             <span><%=moment(blog.created).fromNow()%></span>
         </div>
-
     </div>
     <div class="commentBox">
         <div class="comment-wrapper">
@@ -38,14 +37,14 @@
                 <div class="comment-info">
                     <div class="name"><%=comment.author.username%></div>
                     <div class="text"><%=comment.text %></div>    
+                    <div>
                     <button id="edit" type="button" onclick="editButtonOnClick(this)">Edit</button>
                     <button id="cancel" style="display:none;" type="button">Cancel</button>
-                    <form style="display: none;" id='update' action='/blogs/<%=blog._id%>/comment/<%=comment._id%>?_method=PUT' method='POST'>
-                        <span><button>Update</button></span>
-                    </form>
+                    <button style="display: none;" id="update" onclick="updateButtonOnClick(this,'/blogs/<%=blog._id%>/comment/<%=comment._id%>?_method=PUT')">Update</button>
                     <form id='delete' action='/blogs/<%=blog._id%>/comment/<%=comment._id%>?_method=DELETE' method='POST'>
                         <span><button>Delete</button></span>
                     </form>
+                    </div>
                         <span class='meta showmeta '><%=moment(comment.createdAt).fromNow()%></span>
                              
                 </div>
@@ -54,11 +53,14 @@
                         <div class="comment-info">
                               <div class="name">{{name}}</div>
                                <div class="text">{{comment}}</div>
-                               <button id="edit" type="button" onclick="editButtonOnClick()">Edit</button>
+                               <div>
+                               <button id="edit" type="button" onclick="editButtonOnClick(this)">Edit</button>
                                <button style="display:none;" id="cancel" type="button">Cancel</button>
+                               <button  style="display:none;" id="update" onclick="updateButtonOnClick(this,'{{updateurl}}')">Update</button>
                                <form id='delete' action='{{url}}' method='POST'>
                                 <span><button>Delete</button></span>
                             </form> 
+                             </div>
                                 <span class='meta showmeta'>{{created}}</span>
                         </div>
                  </script>

@@ -32,6 +32,7 @@ channel.bind('new-comment', function (data) {
     newCommentHtml = newCommentHtml.replace('{{comment}}', data.text);
     newCommentHtml=newCommentHtml.replace('{{created}}','a few seconds ago');
     newCommentHtml=newCommentHtml.replace('{{url}}','/blogs/'+id+'/comment/'+data._id+'?_method=DELETE')
+    newCommentHtml=newCommentHtml.replace('{{updateurl}}','/blogs/'+id+'/comment/'+data._id+'?_method=PUT')
     var newCommentNode = document.createElement('div');
     newCommentNode.classList.add('comment');
     newCommentNode.innerHTML = newCommentHtml;
@@ -39,9 +40,11 @@ channel.bind('new-comment', function (data) {
 })
 
 function editButtonOnClick(param){
- var comment=param.previousElementSibling;
+var parent=param.parentElement;
+ var comment=parent.previousElementSibling;
  var editable=comment.contentEditable;
  var cancelButton=param.nextElementSibling;
+ var updateButton=cancelButton.nextElementSibling;
  var commentOriginal=comment.innerHTML;
 
  if(editable=="inherit"||editable=="false"){
@@ -50,6 +53,7 @@ function editButtonOnClick(param){
      comment.contentEditable=true;
      param.style.display="none";
      cancelButton.style.display="inline"
+     updateButton.style.display="inline";
  }
  cancelButton.addEventListener("click",function(){
     comment.style.border="none";
@@ -58,5 +62,30 @@ function editButtonOnClick(param){
     comment.style.padding="0px";
     cancelButton.style.display="none"
     param.style.display="inline"; 
+    updateButton.style.display="none";
  })
+}
+function updateButtonOnClick(param,url){
+var parent=param.parentElement;
+var comment=parent.previousElementSibling;
+var cancelButton=param.previousElementSibling;
+console.log(cancelButton);
+var editButton=param.previousElementSibling.previousElementSibling;
+console.log(editButton)
+var newComment={
+    "text":comment.innerHTML
+}
+comment.contentEditable=false;
+comment.style.border="none";
+param.style.display="none";
+editButton.style.display="inline";
+cancelButton.style.display="none";
+var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState != 4 || xhr.status != 200) return;
+    };
+    xhr.send(JSON.stringify(newComment));
+
 }

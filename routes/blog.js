@@ -41,7 +41,6 @@ router.post('/blogs', middleware.isloggedin, function (req, res) {
 router.get('/blogs/:id', middleware.isloggedin, async (req, res)=> {
   try{
     const blog=await Blog.findById(req.params.id).populate({path:'comments', options: { sort: { 'createdAt': 1 } }}).exec();
-    console.log(blog);
     res.render('show.ejs',{blog:blog});
   }catch(e){
       console.log(e);
@@ -58,6 +57,8 @@ router.get('/blogs/:id/edit', middleware.checkownership, function (req, res) {
     });
 });
 router.put('/blogs/:id', middleware.checkownership, function (req, res) {
+    console.log("yes2");
+    console.log(req.body);
     req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.findByIdAndUpdate(req.params.id, req.body.blog, function (err, updatedblog) {
         if (err) {

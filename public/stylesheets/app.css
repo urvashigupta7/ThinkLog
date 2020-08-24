@@ -12,6 +12,12 @@ body {
     line-height: 1.6 ;
    
   }
+  .white-space-pre-line {
+    white-space: pre-line;
+  }
+  .white-space-pre-wrap {
+    white-space: pre-wrap;
+}
 
 i.icon{
     font-size: 2em;

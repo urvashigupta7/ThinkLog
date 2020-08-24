@@ -25,6 +25,7 @@ router.post('/blogs/:id/comment',middleware.isloggedin,async(req,res)=>{
 
 router.put('/blogs/:id/comment/:commentId',async(req,res)=>{
   try{
+    console.log("yes");
   const tobeedited=await comment.findById(req.params.commentId);
   tobeedited.text=req.body.text;
   tobeedited.save();
@@ -35,7 +36,6 @@ router.put('/blogs/:id/comment/:commentId',async(req,res)=>{
 })
 router.delete('/blogs/:id/comment/:commentId',async(req,res)=>{
   try{
-    console.log(req.params.commentId);
   const tobedeleted=await comment.findByIdAndRemove(req.params.commentId);
   res.redirect(`/blogs/${req.params.id}`);
   }catch(e){
