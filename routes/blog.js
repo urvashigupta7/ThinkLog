@@ -12,7 +12,9 @@ router.get('/blogs', middleware.isloggedin, async function (req, res) {
         const filter = req.query.search || '';
         const search = filter === '' ? false : true;
         const re = new RegExp(filter);
+        console.log("yes");
         const blogs = await Blog.find({ title: { $regex: re, $options: 'i' } }).skip(skip).limit(limit).sort({created:-1}).exec();
+        console.log(blogs);
         const count = await Blog.countDocuments({ title: { $regex: re, $options: 'i' } });
         const showNext = count > limit * page ? true : false;
         res.render('index.ejs', { blogs: blogs, showNext: showNext, current: page, total: Math.ceil(count / limit), filter: filter, search });
@@ -34,6 +36,7 @@ router.post('/blogs', middleware.isloggedin, function (req, res) {
             newblog.author.id = req.user._id;
             newblog.author.username = req.user.username;
             newblog.save();
+            console.log(newblog);
             res.redirect('/blogs');
         }
     });

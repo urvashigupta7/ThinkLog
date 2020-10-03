@@ -16,4 +16,19 @@ function typeWriter() {
 if(i!==text.length){
 setTimeout(typeWriter,speed);
 }
+function validate(){
+  var texteditorbody=document.getElementById("mytextarea");
+  var p=document.getElementById("body-warning");
+  if(texteditorbody.value===''){
+    p.style.display="block";
+    return false;
+  }else{
+    return true;
+  }
+}
+function onblogload(){
+  console.log(body);
+  console.log("yes");
+}
+
 

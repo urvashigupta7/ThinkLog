@@ -11,6 +11,8 @@ var passport=require("passport");
 var user=require('./model/user');
 var moment = require('moment');
 var Pusher = require('pusher');
+var DomParser = require('dom-parser');
+var parser = new DomParser();
 
 var pusher = new Pusher({
   appId: '1029004',
@@ -38,6 +40,7 @@ passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
 app.locals.moment=moment;
+app.locals.parser=parser;
 app.use(express.static('public'));
 app.use(methodoverride('_method'));
 app.use(bodyparser.json());

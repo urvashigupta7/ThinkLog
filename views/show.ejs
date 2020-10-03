@@ -1,28 +1,30 @@
 <%include partials/header%>
-<div class='ui main text container segment show'>
-    <div class='ui huge header'><%=blog.title%></div>
+<div onload="onblogload()" class='ui main text container segment show'>
+    <div class='ui huge header'><%=blog.title%>
+        <% if(currentUser&&blog.author.id.equals(currentUser._id)){%>
+            <div class="hidden-btn">
+                <a href='/blogs/<%=blog._id%>/edit' class='ui floated black button'>Edit</a>
+                <form id='delete' action='/blogs/<%=blog._id%>?_method=DELETE' method='POST'>
+                    <button class='ui floated black button'>Delete</button>
+                </form>
+            </div>
+            <%}%>
+    </div>
     <hr>
     </hr>
     <div class='ui top attached '>
         <div class='item'>
             <div class="my-img">
-                <img class='ui centered rounded image' src="<%=blog.image%>">
+                <img onerror="" class='ui centered rounded image' src="<%=blog.image%>">
             </div>
             <div class='content'>
                 <br>
                 <br>
                 <div class='description white-space-pre-wrap'>
-                    <p><%= blog.body%></p>
+                    <p><%-blog.body%></p>
                 </div>
             </div>
-            <% if(currentUser&&blog.author.id.equals(currentUser._id)){%>
-            <div class="hidden-btn">
-                <a href='/blogs/<%=blog._id%>/edit' class='ui blue basic button'>EDIT</a>
-                <form id='delete' action='/blogs/<%=blog._id%>?_method=DELETE' method='POST'>
-                    <button class='ui blue basic button'>DELETE</button>
-                </form>
-            </div>
-            <%}%>
+           
                     <br>
                     <div class='meta showmeta '>
                         <span><strong>Created By: <%=blog.author.username%> </strong></span>
@@ -30,19 +32,26 @@
             <span><%=moment(blog.created).fromNow()%></span>
         </div>
     </div>
+    <div class="comment-container">
+    <div class="comment-heading">
+    <i class="fas fa-comment-alt fa-lg"></i><h2 style="display: inline-block;color:white;margin-left: 1%;"> Comments</h2>
+    </div>
     <div class="commentBox">
         <div class="comment-wrapper">
             <div class="comments-list" id="comments-list">
+                <% if(blog.comments.length===0){%>
+                  <h3 id="no-comment" style="display: none;">No Comments found</h3>  
+                <%} %> 
                 <% blog.comments.forEach(function(comment){%>
                 <div class="comment-info">
                     <div class="name"><%=comment.author.username%></div>
                     <div class="text"><%=comment.text %></div>    
                     <div>
-                    <button id="edit" type="button" onclick="editButtonOnClick(this)">Edit</button>
-                    <button id="cancel" style="display:none;" type="button">Cancel</button>
-                    <button style="display: none;" id="update" onclick="updateButtonOnClick(this,'/blogs/<%=blog._id%>/comment/<%=comment._id%>?_method=PUT')">Update</button>
+                    <button class="ui floated black button" id="edit" type="button" onclick="editButtonOnClick(this)">Edit</button>
+                    <button class="ui floated black button" id="cancel" style="display:none;" type="button">Cancel</button>
+                    <button class="ui floated black button" style="display: none;" id="update" onclick="updateButtonOnClick(this,'/blogs/<%=blog._id%>/comment/<%=comment._id%>?_method=PUT')">Update</button>
                     <form id='delete' action='/blogs/<%=blog._id%>/comment/<%=comment._id%>?_method=DELETE' method='POST'>
-                        <span><button>Delete</button></span>
+                        <span><button class="ui floated black button">Delete</button></span>
                     </form>
                     </div>
                         <span class='meta showmeta '><%=moment(comment.createdAt).fromNow()%></span>
@@ -54,11 +63,11 @@
                               <div class="name">{{name}}</div>
                                <div class="text">{{comment}}</div>
                                <div>
-                               <button id="edit" type="button" onclick="editButtonOnClick(this)">Edit</button>
-                               <button style="display:none;" id="cancel" type="button">Cancel</button>
-                               <button  style="display:none;" id="update" onclick="updateButtonOnClick(this,'{{updateurl}}')">Update</button>
+                               <button class="ui floated black button" id="edit" type="button" onclick="editButtonOnClick(this)">Edit</button>
+                               <button class="ui floated black button" style="display:none;" id="cancel" type="button">Cancel</button>
+                               <button  class="ui floated black button" style="display:none;" id="update" onclick="updateButtonOnClick(this,'{{updateurl}}')">Update</button>
                                <form id='delete' action='{{url}}' method='POST'>
-                                <span><button>Delete</button></span>
+                                <span><button class="ui floated black button" >Delete</button></span>
                             </form> 
                              </div>
                                 <span class='meta showmeta'>{{created}}</span>
@@ -67,12 +76,13 @@
             </div>
         </div>
     </div>
-    <div>
+    </div>
+    <div style="margin-top: 2%;">
     <section>
         Add your comments...
         <form id="addComment">
-            <textarea id="comment-box" style="width: 100%;" name="text" row="10" col="500"></textarea>
-            <button type="submit" class='ui blue basic button'>Add Comment</button>
+            <textarea id="comment-box" style="width: 100%; padding:1% 1% ;border-radius:10px; margin-bottom:1%"  name="text" row="10" col="500"></textarea>
+            <button type="submit" class='ui floated black button'>Add Comment</button>
         </form>
     </section>
 </div>

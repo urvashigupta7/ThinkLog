@@ -24,12 +24,15 @@
       <div class="meta">
         <span>Created By:<%=blog.author.username%></span>
       </div>
+      <div class="meta">
+        <span><i class="far fa-comment-dots"></i> <%=blog.comments.length%> comments</span>
+      </div>
       <div class="description">
-        <p><%=blog.body.substring(0,100)%>...</p>
+        <p><%=blog.body.substring(0,100).replace( /(<([^>]+)>)/ig, '')%>...</p>
       </div>
     </div>
     <div class="extra content">
-      <a class='ui floated basic blue button' href='/blogs/<%=blog._id%>'>Read more</a>
+      <a class='ui floated black button button-index' href='/blogs/<%=blog._id%>'>Read more</a>
       <br>
       <br>
       <span><%=moment(blog.created).fromNow()%></span>

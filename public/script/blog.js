@@ -37,6 +37,7 @@ channel.bind('new-comment', function (data) {
     newCommentNode.classList.add('comment');
     newCommentNode.innerHTML = newCommentHtml;
     commentsList.appendChild(newCommentNode);
+    hascomments();
 })
 
 function editButtonOnClick(param){
@@ -89,3 +90,13 @@ var xhr = new XMLHttpRequest();
     xhr.send(JSON.stringify(newComment));
 
 }
+function hascomments(){
+var commentlist=document.getElementById("comments-list");
+var nocomment=document.getElementById("no-comment");
+if(commentlist.childElementCount===2){
+    nocomment.style.display='block';
+}else{
+    nocomment.style.display='none';
+}
+};
+hascomments();
