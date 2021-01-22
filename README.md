@@ -9,7 +9,7 @@
 ## Applications Snapshots
 
 ### Landing Page
-![alt text](https://github.com/urvashigupta7/ThinkLog/blob/master/screenshots/Screenshot%20from%202021-01-22%2023-00-07.png)
+![alt text](hhttps://github.com/urvashigupta7/ThinkLog/blob/master/screenshots/Screenshot%20from%202021-01-22%2023-12-33.png)
 
 ### Signup/Login Page
 ![alt text](https://github.com/urvashigupta7/ThinkLog/blob/master/screenshots/Screenshot%20from%202021-01-22%2023-00-11.png)
