@@ -27,7 +27,7 @@ router.get('/blogs/new', middleware.isloggedin, function (req, res) {
 });
 router.post('/blogs', middleware.isloggedin, function (req, res) {
 
-    req.body.blog.body = req.sanitize(req.body.blog.body);
+    console.log(req.body.blog.body)
     Blog.create(req.body.blog, function (err, newblog) {
         if (err) {
             res.render('new.ejs');

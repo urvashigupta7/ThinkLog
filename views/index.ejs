@@ -28,7 +28,8 @@
         <span><i class="far fa-comment-dots"></i> <%=blog.comments.length%> comments</span>
       </div>
       <div class="description">
-        <p><%=blog.body.substring(0,100).replace( /(<([^>]+)>)/ig, '')%>...</p>
+        <% var desc= blog.body.replace( /(<([^>]+)>)/ig, '').substring(0,100) %>
+        <p><%= desc %>...</p>
       </div>
     </div>
     <div class="extra content">

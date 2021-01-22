@@ -12,9 +12,6 @@ var commentSchema=new mongoose.Schema({
        },
        username:String
    },
-   createdAt:{
-       type:Date,
-       default:Date.now()
-   }
+   createdAt:{type:Date,default:Date.now}
 })
 module.exports=mongoose.model("comment",commentSchema);

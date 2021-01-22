@@ -15,7 +15,7 @@
     <div class='ui top attached '>
         <div class='item'>
             <div class="my-img">
-                <img onerror="" class='ui centered rounded image' src="<%=blog.image%>">
+                <img onerror="" class='ui centered rounded image' style="width: 50%;" src="<%=blog.image%>">
             </div>
             <div class='content'>
                 <br>
@@ -45,7 +45,8 @@
                 <% blog.comments.forEach(function(comment){%>
                 <div class="comment-info">
                     <div class="name"><%=comment.author.username%></div>
-                    <div class="text"><%=comment.text %></div>    
+                    <div class="text"><%=comment.text %></div> 
+                    <% if(currentUser&&comment.author.id.equals(currentUser._id)){%>   
                     <div>
                     <button class="ui floated black button" id="edit" type="button" onclick="editButtonOnClick(this)">Edit</button>
                     <button class="ui floated black button" id="cancel" style="display:none;" type="button">Cancel</button>
@@ -54,6 +55,7 @@
                         <span><button class="ui floated black button">Delete</button></span>
                     </form>
                     </div>
+                    <%}%>
                         <span class='meta showmeta '><%=moment(comment.createdAt).fromNow()%></span>
                              
                 </div>
