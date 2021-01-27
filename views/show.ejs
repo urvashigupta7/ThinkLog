@@ -64,7 +64,7 @@
                         <div class="comment-info">
                               <div class="name">{{name}}</div>
                                <div class="text">{{comment}}</div>
-                               <div>
+                               <div style="display:{{display}}">
                                <button class="ui floated black button" id="edit" type="button" onclick="editButtonOnClick(this)">Edit</button>
                                <button class="ui floated black button" style="display:none;" id="cancel" type="button">Cancel</button>
                                <button  class="ui floated black button" style="display:none;" id="update" onclick="updateButtonOnClick(this,'{{updateurl}}')">Update</button>
@@ -90,8 +90,9 @@
 </div>
 </div>
 </div>
-<div id="mydiv" data-test=<%= blog._id %>></div>
-<div id="user" data-user=<%= currentUser.username%>></div>
+<div style="display: none;"id="mydiv" data-test=<%= blog._id %>></div>
+<div style="display: none;" id="user" data-user=<%= currentUser.username%>></div>
+<div style="display: none;" id="userid" data-userid=<%= currentUser._id%>></div>
 
 <script src="/script/blog.js"></script>
 <%include partials/footer%>

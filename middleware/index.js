@@ -1,4 +1,5 @@
 var blog = require("../model/blog.js");
+var comment = require("../model/comment");
 var middleware = {};
 middleware.isloggedin = function isloggedin(req, res, next) {
     if (req.isAuthenticated()) {
@@ -38,5 +39,22 @@ middleware.checkownership = function checkownership(req, res, next) {
     }
 
 
+}
+middleware.checkCommentOwnership = async function checkCommentOwnership(req,res,next){
+    try{
+    if(req.isAuthenticated()){
+      const c=await comment.findById(req.params.commentId);
+      if(c.author.id.equals(req.user._id)){
+          return next();
+      }else{
+          res.redirect('back');
+      }
+      
+    }else{
+        res.redirect('back');
+    }
+   }catch(e){
+       res.redirect('back');
+   }
 }
 module.exports = middleware;

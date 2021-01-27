@@ -1,5 +1,6 @@
 var id = document.getElementById('mydiv').dataset.test;
 var user = document.getElementById('user').dataset.user;
+var userid= document.getElementById('userid').dataset.userid;
 var commentform = document.getElementById("addComment");
 commentform.addEventListener("submit", onNewComment);
 
@@ -33,6 +34,11 @@ channel.bind('new-comment', function (data) {
     newCommentHtml=newCommentHtml.replace('{{created}}','a few seconds ago');
     newCommentHtml=newCommentHtml.replace('{{url}}','/blogs/'+id+'/comment/'+data._id+'?_method=DELETE')
     newCommentHtml=newCommentHtml.replace('{{updateurl}}','/blogs/'+id+'/comment/'+data._id+'?_method=PUT')
+    if(data.author.id===userid){
+        newCommentHtml=newCommentHtml.replace('{{display}}',"block");
+    }else{
+        newCommentHtml=newCommentHtml.replace('{{display}}',"none");
+    }
     var newCommentNode = document.createElement('div');
     newCommentNode.classList.add('comment');
     newCommentNode.innerHTML = newCommentHtml;
@@ -70,9 +76,7 @@ function updateButtonOnClick(param,url){
 var parent=param.parentElement;
 var comment=parent.previousElementSibling;
 var cancelButton=param.previousElementSibling;
-console.log(cancelButton);
 var editButton=param.previousElementSibling.previousElementSibling;
-console.log(editButton)
 var newComment={
     "text":comment.innerHTML
 }
@@ -96,7 +100,9 @@ var nocomment=document.getElementById("no-comment");
 if(commentlist.childElementCount===2){
     nocomment.style.display='block';
 }else{
+    if(nocomment){
     nocomment.style.display='none';
+    }
 }
 };
 hascomments();

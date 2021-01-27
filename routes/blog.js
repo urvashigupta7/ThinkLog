@@ -12,9 +12,7 @@ router.get('/blogs', middleware.isloggedin, async function (req, res) {
         const filter = req.query.search || '';
         const search = filter === '' ? false : true;
         const re = new RegExp(filter);
-        console.log("yes");
-        const blogs = await Blog.find({ title: { $regex: re, $options: 'i' } }).skip(skip).limit(limit).sort({created:-1}).exec();
-        console.log(blogs);
+        const blogs = await Blog.find({ title: { $regex: re, $options: 'i' } }).populate({path:'comments'}).skip(skip).limit(limit).sort({created:-1}).exec();
         const count = await Blog.countDocuments({ title: { $regex: re, $options: 'i' } });
         const showNext = count > limit * page ? true : false;
         res.render('index.ejs', { blogs: blogs, showNext: showNext, current: page, total: Math.ceil(count / limit), filter: filter, search });
@@ -27,7 +25,7 @@ router.get('/blogs/new', middleware.isloggedin, function (req, res) {
 });
 router.post('/blogs', middleware.isloggedin, function (req, res) {
 
-    console.log(req.body.blog.body)
+   
     Blog.create(req.body.blog, function (err, newblog) {
         if (err) {
             res.render('new.ejs');
@@ -36,7 +34,6 @@ router.post('/blogs', middleware.isloggedin, function (req, res) {
             newblog.author.id = req.user._id;
             newblog.author.username = req.user.username;
             newblog.save();
-            console.log(newblog);
             res.redirect('/blogs');
         }
     });
@@ -60,8 +57,6 @@ router.get('/blogs/:id/edit', middleware.checkownership, function (req, res) {
     });
 });
 router.put('/blogs/:id', middleware.checkownership, function (req, res) {
-    console.log("yes2");
-    console.log(req.body);
     req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.findByIdAndUpdate(req.params.id, req.body.blog, function (err, updatedblog) {
         if (err) {
